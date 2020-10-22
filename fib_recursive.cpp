@@ -2,25 +2,15 @@
 #include <vector>
 #include <numeric>
 
+// mozemy zwracac konstrukcje
+
 using namespace std;
 
-vector <int> fib(int number, int size)
+int fib(int n)
 {
-   static int counter = 0;
-   counter ++;
-
-   static long long a = 0, b = 1;
-
-   static vector <int> fib_vector;
-
-   if(counter == size)
-        return fib_vector;
-
-    fib_vector.push_back(b);
-    b += a;
-    a = b-a;
-
-    return fib(b, size);
+    if (n <= 1)
+        return n;
+    return fib(n-1) + fib(n-2);
 }
 
 int main()
@@ -30,18 +20,24 @@ int main()
     cout << "Type in how many elements of Fibonacci sequence would you like to display: ";
     cin >> number;
 
-    vector <int> myvector = fib(number, number);
+    vector <int> myvector;
+
+    for (int i = number; i > 0; i--)
+    {
+        number--;
+        myvector.push_back(fib(number));
+    }
 
     std::cout << "Fibonacci sequence up to its " << number << "th element: ";
 
-      for (int i = 0; i < myvector.size(); i++)
+      for (auto it = myvector.rbegin(); it != myvector.rend(); ++it)
    {
-       cout << myvector[i] << " ";
+       cout << *it << " ";
    }
 
    cout << ". " << endl;
 
-   cout << "Sum of above listed elements: " << accumulate(myvector.begin(), myvector.end(), 0) << " . ";
+   cout << "Sum of above listed elements: " << accumulate(myvector.begin(), myvector.end(), 0) << ". ";
 
     return 0;
 }
